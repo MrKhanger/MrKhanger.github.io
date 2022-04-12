@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Slider</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+		integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+	<div id="content-wrapper">
+
+
+		<div class="column">
+			<img id=featured src="https://cdn.pixabay.com/photo/2017/09/22/11/46/book-2775281_960_720.png" alt="" >
+
+			<div id="slide-wrapper">
+				<img id="slideLeft" class="arrow" src="images/arrow-left.png" alt="" >
+
+				<div id="slider">
+					<img class="thumbnail active"
+						src="https://cdn.pixabay.com/photo/2017/09/22/11/46/book-2775281_960_720.png" alt="" > 
+					<img class="thumbnail"
+						src="https://cdn.pixabay.com/photo/2017/09/07/08/57/drone-2724257_960_720.jpg" alt="" >
+					<img class="thumbnail"
+						src="https://cdn.pixabay.com/photo/2014/02/22/10/52/champagne-glass-271948_960_720.jpg" alt="" >
+
+					<img class="thumbnail"
+						src="https://cdn.pixabay.com/photo/2017/10/10/22/24/wide-format-2839089_960_720.jpg" alt="" >
+				</div>
+
+				<img id="slideRight" class="arrow" src="images/arrow-right.png">
+			</div>
+		</div>
+		<div class="column">
+
+			<h1 style="background-color: black; color: white;">Book name</h1>
+			<hr>
+			<h5> <strong>Price:</strong>₹89.99</h5>
+
+			<p> <Strong>Description:</Strong> will show up here Lorem Ipsum is simply dummy text of the printing and
+				typesetting
+				industry. Lor lorem em Ipsum has been the industry's standard dummy text ever since the 1500s, when
+				an
+				unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+
+			<strong>Quantity: </strong> <b> 1</b>
+
+			<form action="/action_page.php">
+				<label style="font-weight: 600; font-size: 17px;" for="birthdaytime">Pick Up Date and Time (in 24
+					Hr):</label>
+				<input type="datetime-local" id="birthdaytime" name="birthdaytime">
+			</form>
+
+
+
+			<br><br>
+			<div class="btns">
+				<button type="submit" class="btn">Buy now</button>
+				<button type="submit" class="btn">Add to cart</button>
+			</div>
+			<br>
+			<div id="Seller-Address-info"><Strong>Address:</Strong>
+				<p>Apt 05, Near ABC building <br> Abc City/ State/ Zip Code</p>
+			</div>
+			<div id="location-mark"><strong>Location:</strong> <i class="fas fa-map-marker-alt"
+					style="color: rgb(255, 67, 67);" aria-hidden="true"></i> </div>
+
+			<!-- <div id="Important-Info">
+					<p style="display: block;"> <b> Note:</b> You will get the Seller contact information via email 60
+						minutes prior to your Pick Up time. </p>
+				</div> -->
+		</div>
+	</div>
+	<hr>
+
+	<script type="text/javascript">
+		let thumbnails = document.getElementsByClassName('thumbnail')
+
+		let activeImages = document.getElementsByClassName('active')
+
+		for (var i = 0; i < thumbnails.length; i++) {
+
+			thumbnails[i].addEventListener('click', function () {
+				console.log(activeImages)
+
+				if (activeImages.length > 0) {
+					activeImages[0].classList.remove('active')
+				}
+
+
+				this.classList.add('active')
+				document.getElementById('featured').src = this.src
+			})
+		}
+
+
+		let buttonRight = document.getElementById('slideRight');
+		let buttonLeft = document.getElementById('slideLeft');
+
+		buttonLeft.addEventListener('click', function () {
+			document.getElementById('slider').scrollLeft -= 180
+		})
+
+		buttonRight.addEventListener('click', function () {
+			document.getElementById('slider').scrollLeft += 180
+		})
+
+
+	</script>
+
+	<br>
+	<br>
+	<br>
+
+
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://yegor256.github.io/tacit/tacit.min.css"/>
+    <link rel="stylesheet" href="CSS/Style.css">
+</head>
+<body>
+    <form id="checkout-selection" method="POST">
+        <input type="radio" name="checkout" value="automatic">Automatic Checkout Demo<br>
+        <input type="radio" name="checkout" value="orders">Manual Checkout Demo<br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div class="RaiseReq" style= "display: block;">
+
+        <button id="Raise-Req-btn" class= "btn-cart" onclick="RequestForm()"> <i class="fas fa-hand-sparkles"></i> Raise Request </button>
+  
+  </div>
+
+    <div id="RIR"  class="LoginForm animate"  style="display: none">
+        <i type="button" class="far fa-times-circle" onclick="CloseForm()" style="font-size:30px; cursor:pointer; float: right; padding-top: 10px; color: black; cursor: poiter;"></i>
+        <br>
+
+        <!-- Change in tags i.e h2 replaced with h4/h3 -->
+
+        <h5 >RentOrLendAnything.com</h5>
+        <h2>Raise Item Request</h2>
+
+        <!-- Removed label tag from the input because that was causing the difference in spacing  -->
+
+        <div >
+            <input type="email" class="element" name="myEmail" id="raise_item_name" placeholder="Item Name">
+        </div>
+        <div >
+            <input type="number and text" class="element" id="raise_no_of_days" name="My number" placeholder="Number Of Days To Rent">
+        </div>
+        <div >
+            <textarea name="Description" class="element" id="raise_product_desc" cols="30" rows="3"  placeholder= "Product Description" ></textarea>
+        </div>
+        <div class="Update-btn" style="display: flex;margin-left: 20px;"><button type="button" class="btn-cancel"
+                        onclick="CloseForm()">Close</button>
+                    <button type="button" class="btn-cancel RaiseRequest">Raise</button>
+                </div>
+            <br>
+            <br>
+
+        </div>
+
+    </div>
+    
+  <script>
+
+    
+function RequestForm()
+{
+document.getElementById("RIR").style.display ="block"
+}
+
+function CloseForm() {
+
+document.getElementById("RIR").style.display = "none"
+}
+
+</script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        jQuery(document).ready(function($) 
+        {
+            var form = $('#checkout-selection');
+            var radio = $('input[name="checkout"]');
+            var choice = '';
+
+            radio.change(function(e) 
+            {
+                choice = this.value;
+                if (choice === 'orders') 
+                {
+                    form.attr('action', 'pay.php?checkout=manual');
+                } 
+                else 
+                {
+                    form.attr('action', 'pay.php?checkout=automatic');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

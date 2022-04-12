@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<link rel="stylesheet" href="CSS/Style.css">
+<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		background-color: #f1f1f1;
+	}
+
+	#regForm {
+		background-color: #ffffff;
+		margin: 100px auto;
+		font-family: Raleway;
+		padding: 40px;
+		border: 1px solid black;
+    	box-shadow: 0 10px 20px -4px black;
+		width: 70%;
+		min-width: 300px;
+	}
+
+	#BooksResell {
+		text-align: center;
+	}
+
+	input {
+		padding: 10px;
+		width: 100%;
+		font-size: 17px;
+		font-family: Raleway;
+		border: 1px solid #aaaaaa;
+	}
+
+	#Location-btn{
+		border-radius: 8px;
+    display: flex;
+    padding: 8px 12px;
+    font-size: 18px;
+    transition: 0.3s;
+    margin: 0.5% 0.7%;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+    justify-content: center;
+	width: auto;
+	}
+
+	/* Mark input boxes that gets an error on validation: */
+	input.invalid {
+		background-color: #ffdddd;
+	}
+
+	/* Hide all steps by default: */
+	.tab {
+		display: none;
+	}
+
+	button {
+		background-color: #04AA6D;
+		color: #ffffff;
+		border: none;
+		padding: 10px 20px;
+		font-size: 17px;
+		font-family: Raleway;
+		cursor: pointer;
+	}
+
+	button:hover {
+		opacity: 0.8;
+	}
+
+	#prevBtn {
+		background-color: #bbbbbb;
+	}
+
+	/* Make circles that indicate the steps of the form: */
+	.step {
+		height: 15px;
+		width: 15px;
+		margin: 0 2px;
+		background-color: #bbbbbb;
+		border: none;
+		border-radius: 50%;
+		display: inline-block;
+		opacity: 0.5;
+	}
+
+	.step.active {
+		opacity: 1;
+	}
+
+	/* Mark the steps that are finished and valid: */
+	.step.finish {
+		background-color: #04AA6D;
+	}
+</style>
+
+<body>
+
+	<form id="regForm" action="/action_page.php">
+		<h2 id="BooksResell">Sell your books:</h1>
+		<!-- One "tab" for each step in the form: -->
+		<div class="tab"> <strong> Books Details:</strong>
+			<p><input placeholder="Name of the Book..." oninput="this.className = ''" name="fname"></p>
+			<p><input placeholder="Category" oninput="this.className = ''" name="lname"></p>
+			<p><input placeholder="Description" oninput="this.className = ''" name="lname"></p>
+		</div>
+		<div class="tab">:
+			<p><input placeholder="Year of Publication..." oninput="this.className = ''" name="email"></p>
+			<p><input placeholder="Price of the Book..." oninput="this.className = ''" name="phone"></p>
+		</div>
+		<div class="tab">
+			<div class="form-group">
+				<label for="P_Price" class="label-title"><strong> Your Address (To Pick Up The Book/s)</strong></label>
+				<div class="Address-Apt" style="display: flex;">
+					<input type="text" id="Address" class="form-input" placeholder="Address" required="required" />
+					<input type="text" id="Apartment-num" class="form-input" placeholder="Landmark"
+						required="required" />
+				</div>
+				<div class="City-zip" style="display: flex;">
+					<input type="text" id="City" class="form-input" placeholder="City" required="required" />
+					<input type="text" id="State" class="form-input" placeholder="State" required="required" />
+					<input type="text" id="Zip-code" class="form-input" placeholder="Zip-Code" required="required" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="P_Price" class="label-title"><strong>Your location (For precision in location)</strong>
+					<button id="Location-btn" onclick="getLocation()"> Location &nbsp; <i class="icon-map-marker"></i> </button> </label>
+					<p id="demo"></p>
+			</div>
+		</div>
+		<div class="tab">
+			<div class="Product-Img_input">
+				<label for="Product_Picture_1" class="label-title">Book's Cover Picture * </label>
+				<input type="file" id="Product_Picture_1" size="80" name="Product_Picture_1"> <br><br>
+				<label for="Product_Picture_2" class="label-title"> Book's Index Picture * </label>
+				<input type="file" id="Product_Picture_2" size="80" name="Product_Picture_2"> <br><br>
+				<label for="Product_Picture_3" class="label-title"> Book's Content Picture </label>
+				<input type="file" id="Product_Picture_3" size="80" name="Product_Picture_3">
+			</div>
+		</div>
+		<div style="overflow:auto;">
+			<div style="float:right;">
+				<button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+				<button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+			</div>
+		</div>
+		<!-- Circles which indicates the steps of the form: -->
+		<div style="text-align:center;margin-top:40px;">
+			<span class="step"></span>
+			<span class="step"></span>
+			<span class="step"></span>
+			<span class="step"></span>
+		</div>
+	</form>
+
+	<script>
+		var currentTab = 0; // Current tab is set to be the first tab (0)
+		showTab(currentTab); // Display the current tab
+
+		function showTab(n) {
+			// This function will display the specified tab of the form...
+			var x = document.getElementsByClassName("tab");
+			x[n].style.display = "block";
+			//... and fix the Previous/Next buttons:
+			if (n == 0) {
+				document.getElementById("prevBtn").style.display = "none";
+			} else {
+				document.getElementById("prevBtn").style.display = "inline";
+			}
+			if (n == (x.length - 1)) {
+				document.getElementById("nextBtn").innerHTML = "Submit";
+			} else {
+				document.getElementById("nextBtn").innerHTML = "Next";
+			}
+			//... and run a function that will display the correct step indicator:
+			fixStepIndicator(n)
+		}
+
+		function nextPrev(n) {
+			// This function will figure out which tab to display
+			var x = document.getElementsByClassName("tab");
+			// Exit the function if any field in the current tab is invalid:
+			if (n == 1 && !validateForm()) return false;
+			// Hide the current tab:
+			x[currentTab].style.display = "none";
+			// Increase or decrease the current tab by 1:
+			currentTab = currentTab + n;
+			// if you have reached the end of the form...
+			if (currentTab >= x.length) {
+				// ... the form gets submitted:
+				document.getElementById("regForm").submit();
+				return false;
+			}
+			// Otherwise, display the correct tab:
+			showTab(currentTab);
+		}
+
+		function validateForm() {
+			// This function deals with validation of the form fields
+			var x, y, i, valid = true;
+			x = document.getElementsByClassName("tab");
+			y = x[currentTab].getElementsByTagName("input");
+			// A loop that checks every input field in the current tab:
+			for (i = 0; i < y.length; i++) {
+				// If a field is empty...
+				if (y[i].value == "") {
+					// add an "invalid" class to the field:
+					y[i].className += " invalid";
+					// and set the current valid status to false
+					valid = false;
+				}
+			}
+			// If the valid status is true, mark the step as finished and valid:
+			if (valid) {
+				document.getElementsByClassName("step")[currentTab].className += " finish";
+			}
+			return valid; // return the valid status
+		}
+
+		function fixStepIndicator(n) {
+			// This function removes the "active" class of all steps...
+			var i, x = document.getElementsByClassName("step");
+			for (i = 0; i < x.length; i++) {
+				x[i].className = x[i].className.replace(" active", "");
+			}
+			//... and adds the "active" class on the current step:
+			x[n].className += " active";
+		}
+
+		// Script for Location 
+		var x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;
+}
+	</script>
+
+</body>
+
+</html>
